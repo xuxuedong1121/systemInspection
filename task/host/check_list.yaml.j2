@@ -1,7 +1,7 @@
 ---
 {% if config.base_check.is_check %}
 - name: "操作系统 基础巡检"
-  # 里约智能网关所有相关节点ip
+  # 所有相关节点ip
   hosts: {{ config.base_check.all_hosts }}
   roles:
   - role: host-system
