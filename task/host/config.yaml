@@ -1,0 +1,123 @@
+# 巡检配置文件
+
+# hosts ssh连接信息，默认用户为root，默认端口为22 非默认值写法： checker@rio.tencent.com:36000
+# node_list 用于验证集群信息，仅填写ip地址即可
+# is_check 用于是否启用该模块巡检 默认使用check_all的值，关闭改为false即可
+# 修改各组件 账号 密码 端口 等信息
+
+# poc环境三节点通过引用方式快速修改，生产环境修改每个模块对应hosts和node_list
+default_hosts: &hosts ['42.192.144.152,root,Tcdn@2007,36000', '42.192.144.152,root,Tcdn@2007,36000', '42.192.144.152,root,Tcdn@2007,36000']
+default_node_list: &node_list ['42.192.144.152', '42.192.144.152', '42.192.144.152']
+check_all: &check_all true
+
+# 准入网关配置
+accessgate:
+  is_check: *check_all
+  hosts: *hosts
+  port: 80
+
+# api网关配置
+apigate:
+  is_check: true
+  hosts: *hosts
+  port: 8080
+
+# elasticsearch配置
+elasticsearch:
+  is_check: *check_all
+  hosts: *hosts
+  node_list: *node_list
+  port: 9200
+  username: rio
+  password: ee06167b10a177f60766d35baa81955d
+
+# etcd配置
+etcd:
+  is_check: *check_all
+  hosts: *hosts
+  node_list: *node_list
+  port: 2379
+  username: rio
+  password: ee06167b10a177f60766d35baa81955d
+
+# mongodb配置
+mongodb:
+  is_check: *check_all
+  hosts: *hosts
+  node_list: *node_list
+  primary_node: 172.27.16.2
+  port: 27017
+  # 使用具有root角色的账号
+  username: root
+  password: ee06167b10a177f60766d35baa81955d
+
+# redis 配置
+redis:
+  is_check: *check_all
+  # 主节点写在最前面
+  hosts: *hosts
+  master_port: 6379
+  slave_port: 16379
+  sentinel_port: 26379
+  password: ee06167b10a177f60766d35baa81955d
+
+# consul配置
+consul:
+  is_check: *check_all
+  hosts: *hosts
+  node_list: *node_list
+  port: 8499
+
+# 操作系统基础巡检配置项
+base_check:
+  is_check: *check_all
+  all_hosts: *hosts
+  # 挂载点，多个挂载点添加即可
+  mount_point:
+    - "/"
+    - "/data"
+
+# demo服务配置
+demo_info:
+  is_check: *check_all
+  url: /ebus/test/testapi
+  # 域名
+  host: rio.tencent.com
+  paas_id: test
+  paas_token: testtest
+  # 接口的response字符串
+  response: 'true'
+
+# 出去accessgate apigate counsul etcd 之外的其他服务
+service_list:
+      # 根据版本作相应修改 30个服务
+      - rio-appmgnt.service
+      - rio-appmgnt03.service
+      - rio-atlas-account.service
+      - rio-atlas-acs.service
+      - rio-atlas-auth.service
+      - rio-atlas-openapi.service
+      - rio-atlas-profile.service
+      - rio-atlas-web.service
+      - rio-attachment.service
+      # 1.2.X 版本没有 confd
+      - rio-confd.service
+      - rio-dex.service
+      - rio-filebeat.service
+      - rio-gateagent.service
+      - rio-license-agent.service
+      - rio-license-auth.service
+      - rio-logkit.service
+      - rio-om.service
+      - rio-openapi.service
+      - rio-org.service
+      - rio-orgsync.service
+      - rio-rio-web.service
+      - rio-rio-webapi.service
+      - rio-sgadmin.service
+      - rio-sgrule.service
+      - rio-support.service
+      - rio-svccatalog.service
+      - rio-vendors-api.service
+      - rio-vendors.service
+      - rio-xds.service

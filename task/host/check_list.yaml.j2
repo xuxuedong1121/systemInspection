@@ -1,0 +1,27 @@
+---
+{% if config.base_check.is_check %}
+- name: "操作系统 基础巡检"
+  # 里约智能网关所有相关节点ip
+  hosts: {{ config.base_check.all_hosts }}
+  roles:
+  - role: host-system
+    funcs:
+    - func: mem_useage
+    - func: load_average
+      desc: "检查最近5分钟系统平均负载是否小于CPU核数"
+      args:
+        N: 5
+    - func: sync_date
+    - func: ping
+    - func: ping_delay
+      desc: "ping网络延迟小于 1 ms"
+      args:
+        max_ms: 1
+{% for mount in  config.base_check.mount_point %}
+    - func: partition_useage
+      desc: "检查挂载点 {{ mount }} 使用率小于80%"
+      args:
+        mountpoint: {{ mount }}
+{% endfor %}
+{% endif %}
+

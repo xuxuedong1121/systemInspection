@@ -1,0 +1,52 @@
+{
+    "rio": {
+        "操作系统 基础巡检": {
+            "42.192.144.152": {
+                "host-system": [
+                    {
+                        "name": "检查内存使用率是否小于 80%",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "mem total: 1837.0m, used: 225.0m, useage: 12.25%"
+                    },
+                    {
+                        "name": "检查最近5分钟系统平均负载是否小于CPU核数",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "load_average"
+                    },
+                    {
+                        "name": "检查时间是否同步",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "sync_date"
+                    },
+                    {
+                        "name": "连通性",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "ping"
+                    },
+                    {
+                        "name": "ping网络延迟小于 1 ms",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "ping_delay"
+                    },
+                    {
+                        "name": "检查挂载点 / 使用率小于80%",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "/:80%"
+                    },
+                    {
+                        "name": "检查挂载点 /data 使用率小于80%",
+                        "datetime": "2020-12-06 18:13:40",
+                        "status": 0,
+                        "msg": "/data:80%"
+                    }
+                ]
+            }
+        }
+    }
+}

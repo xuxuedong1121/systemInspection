@@ -1,0 +1,4 @@
+---
+name: "主机 负载巡检"
+tasks:
+  - include: check_list.yaml
